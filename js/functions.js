@@ -6559,11 +6559,13 @@ function filename_to_cdata(oname)
 	var name=oname.substr(0,oname.length-3);
 	var slot=name.split(".");
 	if(slot.length<2) return;
-	slot=parseInt(slot[slot.length-1]);
+	slot=slot[slot.length-1];
+	var num_slot=parseInt(slot);
+	if(!isNaN(num_slot)) slot=num_slot;
 	name=name.substr(0,name.length-(""+slot).length-1);
 	var valid=false;
-	if(1<=slot && slot<=100) valid=true;
-	X.characters.forEach(function(c){if(c.id==slot) valid=true;});
+	if(typeof slot==="number" && 1<=slot && slot<=100) valid=true;
+	X.characters.forEach(function(c){if(""+c.id==""+slot) valid=true;});
 	// console.log((name+"."+slot+".js")+"|"+oname);
 	if((name+"."+slot+".js")!=oname) valid=false;
 	name.split("").forEach(function(c){ if(!valid_file_chars.includes(c)) valid=false; });

@@ -4411,10 +4411,10 @@ function init_io() {
 		socket.first_x = observer_x;
 		socket.first_y = observer_y + 120;
 		socket.desktop = true;
-		if (socket.request && socket.request._query && socket.request._query.secret) {
+		if (socket.handshake.query && socket.handshake.query.secret) {
 			for (var id in players) {
 				var player = players[id];
-				if (player.secret == socket.request._query.secret) {
+				if (player.secret == socket.handshake.query.secret) {
 					socket.player = player;
 					data.character = player_to_client(player);
 					data.character.id = data.character.name = player.name;
@@ -4422,7 +4422,7 @@ function init_io() {
 					socket.first_in = player.in;
 					socket.first_x = player.x;
 					socket.first_y = player.y;
-					if (socket.request._query.desktop) {
+					if (socket.handshake.query.desktop) {
 						socket.desktop = true;
 						socket.first_y += 120;
 					} else {

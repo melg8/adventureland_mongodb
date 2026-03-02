@@ -6690,7 +6690,7 @@ async function process_file(folder, cdata) {
 				file_op[cdata.file] = new Date();
 			}
 		} else {
-			add_log("Uploading code: " + cdata.file);
+			// add_log("Uploading code: " + cdata.file);
 			await fs.promises
 				.readFile(folder + "/" + cdata.file, "utf8")
 				.then(async (data) => {

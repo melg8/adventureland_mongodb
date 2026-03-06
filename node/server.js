@@ -690,14 +690,16 @@ server_api.post("/lost_friend", (req, res) => {
 server_api.post("/eval", (req, res) => {
 	if (req.body.spass !== keys.ACCESS_MASTER) return res.status(403).send("");
 	var output = "";
-	var data = JSON.parse(req.body.data || "{}");
 	try {
+		var data = JSON.parse(req.body.data || "{}");
 		eval(req.body.code);
+		res.send(JSON.stringify(output));
 	} catch (e) {
 		console.log("\n" + req.body.code);
 		log_trace("chttp_eval", e);
+		// Always send valid JSON response even on error
+		res.send(JSON.stringify(output));
 	}
-	res.send(JSON.stringify(output));
 });
 
 app.use(server_def.api_path, server_api);

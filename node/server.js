@@ -191,7 +191,7 @@ var mode = {
 	low49_200xgoo: 1,
 	pve_safe_magiports: 1,
 	instant_monster_attacks: 1, // #TODO: Consider dynamically sending target data instantly too
-	drm_check: 1,
+	drm_check: 0, // Disabled for local development
 	all_roam: 0,
 	all_smart: 1,
 	prevent_external: 0, // for "test" / "hardcore"
@@ -10387,7 +10387,7 @@ function init_io() {
 			if (guild) player.guild = guild_to_info(guild);
 			if (ip_info && ip_info.exception) player.ipx = ip_info.info.limit;
 			player.cash = owner.cash;
-			player.verified = gf(owner, "verified", 0);
+			player.verified = 1; // Force verified for local development
 
 			if (!instances[player.map] || !instances[player.map].allow || instances[player.map].mount) {
 				var place = G.maps[player.map].on_exit || G.maps[B.start_map].on_exit || ["main", 0];

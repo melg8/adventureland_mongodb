@@ -1077,11 +1077,21 @@ async function server_eval(server, code, data) {
 				data: JSON.stringify(data),
 			}).toString(),
 		});
-		var response = await response.text();
-		//console.log(response);
-		return JSON.parse(response);
+		var response_text = await response.text();
+		//console.log(response_text);
+		// Handle empty or invalid JSON responses gracefully
+		if (!response_text || response_text.trim() === "") {
+			console.error("server_eval: empty response from server " + server.name + " (" + server.region + ")");
+			return null;
+		}
+		try {
+			return JSON.parse(response_text);
+		} catch (parse_error) {
+			console.error("server_eval: invalid JSON from server " + server.name + " (" + server.region + "): " + response_text.substring(0, 200));
+			return null;
+		}
 	} catch (e) {
-		console.error("server_eval error", e);
+		console.error("server_eval error for server " + (server ? server.name + " (" + server.region + ")" : "unknown"), e);
 		return null;
 	}
 }

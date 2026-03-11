@@ -304,6 +304,7 @@ if (server_name == "HARDCORE") {
 	}
 } else {
 	gameplay = "normal";
+    options.ip_limit = 999;
 }
 
 // B.u_boundary=12; B.u_vision=12; B["vision"]=[320,270]

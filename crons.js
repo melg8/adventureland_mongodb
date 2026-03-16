@@ -9,14 +9,14 @@ if (process.env.pm_id === "0" || !process.env.pm_id) {
 		);
 	setInterval(
 		async function () {
-			// hourly
+			// every 5 minutes
 			await unstuck_characters();
 		},
 		5 * 60 * 1000,
 	);
 	setInterval(
 		async function () {
-			// hourly
+			// every 1 minute
 			await check_servers();
 		},
 		1 * 60 * 1000,
@@ -25,6 +25,16 @@ if (process.env.pm_id === "0" || !process.env.pm_id) {
 		setTimeout(occasional_backups, 60 * 60 * 1000);
 		setTimeout(backup_everything_every_week, 60 * 60 * 1000);
 	}
+	// Auto backup characters and users every 5 minutes
+	setInterval(
+		async function () {
+			console.log("Auto backup: Starting character and user backups");
+			await backup_users_cron();
+			await backup_characters_cron();
+			console.log("Auto backup: Completed");
+		},
+		5 * 60 * 1000,
+	);
 }
 
 setTimeout(enforce_limitations, 6000);

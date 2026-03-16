@@ -13,7 +13,7 @@ function sint(x) {
 
 function can_create_character_check(user, ip) {
 	if (user.pid) user.info.slots = Math.max(gf(user, "slots", 8), 8);
-	if (ip && gf(ip, "limit_create_character", 0) > 12) return { can: false, reason: "ip" };
+	if (ip && gf(ip, "limit_create_character", 0) > 999) return { can: false, reason: "ip" };
 	if (gf(user, "characters", []).length >= 18) return { can: false, reason: "abs" };
 	if (gf(user, "characters", []).length >= gf(user, "slots", 5)) {
 		if (user.cash >= 200) return { can: true, paid: true };
@@ -113,7 +113,7 @@ async function signup_or_login_api(args) {
 	var ip = await get_ip_info(args.req);
 	var referrer = await get_referrer(args.req, ip);
 
-	if (gf(ip, "limit_signups", 0) >= 3) return { failed: true, reason: "too_many_signups_from_ip_wait" };
+	if (gf(ip, "limit_signups", 0) >= 999/5) return { failed: true, reason: "too_many_signups_from_ip_wait" };
 
 	var R = await tx(
 		async () => {
